@@ -1,13 +1,12 @@
 exports.formloader = {
   "forms": {
-    "forms": {
-      "fields": ["key","fieldsets","fields","buttons","validations","decorators"]
-    },
     "fieldsets": {
-      "fields": ["key","fields","buttons","decorators","validations"]
+      "fields": ["key","fields","buttons","decorators","validations"],
+      "buttons": ["save","preview"]
     },
     "fields": {
-      "fields": ["key","validations","decorators"]
+      "fields": ["key","validations","decorators"],
+      "buttons": ["save","preview"]
     },
     "buttons": {
       "fields": ["key","validations","decorators"]
@@ -17,6 +16,10 @@ exports.formloader = {
     },
     "decorators": {
       "fields": ["key","functionBody"]
+    },
+    "forms": {
+      "fields": ["key","fieldsets","fields","buttons","validations","decorators"],
+      "buttons": ["save","preview"]
     }
   },
   "fields": {
@@ -58,7 +61,12 @@ exports.formloader = {
   
   },
   "buttons": {
-  
+    "save": {
+      "value": "Button"
+    },
+    "preview": {
+      "value": "Button"
+    }
   },
   "validations": {
   

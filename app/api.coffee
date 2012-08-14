@@ -54,12 +54,15 @@ prepInput = (json, type) ->
 
 # Save the application, by eval'ing the App
 # {string} - name - name of the app being saved
-saveApp = (name) ->
+saveApp = (name, callback) ->
+
   output = new ObjectDump(eval(Apps[name])).render(settings.dump(name));
 
   # Create the file
-  fs.writeFile path.join(OutputDir, name.toLowerCase() + '.js'), output, 'UTF-8', () ->
+  fs.writeFile path.join(OutputDir, name.toLowerCase() + '.js'), output, 'UTF-8', (err) ->
     
+    if callback? then callback(err)
+
     # Alert that the app was saved
     console.log("App #{name} updated!")
 
@@ -112,10 +115,10 @@ module.exports =
   # {string} - type  - type of item being created
   # {string} - key   - name of the key being created
   # {string} - value - value for the item being created
-  createItem : (name, type, key, value) ->
+  createItem : (name, type, key, value, callback) ->
     if Apps[name]?
       Apps[name][type][key] = prepInput(value, type)
-      saveApp(name)
+      saveApp(name, callback)
   
   # Updates an item on the app, checking
   # if the ID has changed, updating references accordingly
@@ -123,17 +126,14 @@ module.exports =
   # {string} - type  - type of item being updated
   # {string} - key   - name of the key being updated
   # {string} - value - value for the item being updated
-  updateItem : (name, type, key, value) ->
-    resp = {}
+  updateItem : (name, type, key, value, callback) ->
     appItem = Apps[name][type]
     if Apps[name]?
       if value.id isnt value.key
         delete appItem[value.id]
-        resp.id = value.key
         updateItemRef(name, type, value.id, value.key)
       Apps[name][type][value.key] = prepInput(value, type)
-      saveApp(name)
-      return resp
+      saveApp name, callback
     else
       throw new ApiError("The #{name} - #{type} - #{key} isn't defined")
 
@@ -142,31 +142,38 @@ module.exports =
   # {string} - name  - application name
   # {string} - type  - type of item being removed
   # {string} - key   - name of the key being removed
-  deleteItem : (name, type, key) ->
+  deleteItem : (name, type, key, callback) ->
     if Apps[name]?[type]?[key]?
       app = Apps[name]
       delete app[type][key]
       updateItemRef(name, type, key)
-      saveApp(name)
+      saveApp(name, callback)
 
   # Deletes an application
   # {string} - name - application name
+  # {function} - callback - callback for the app
   deleteApp : (name, callback) ->
     appFilename = path.join(OutputDir, name + '.js')
     
     fs.exists appFilename, (exists) ->
+      
       if exists
-        fs.unlink appFilename, (err, resp) ->
+      
+        fs.unlink appFilename, (err) ->
           delete Apps[name]
-          callback(err, resp);
+          callback(err);
+      
       else
-        throw new ApiError("File #{appFilename} doesn't exist");
+        callback(new ApiError("File #{appFilename} doesn't exist"));
 
   # Create a new application
   # {object}   - name - name of the app
   # {function} - callback - to be executed when the file is created
   createApp : (name, callback) ->
     
+    if _.isEmpty(name)
+      throw new ApiError('The application name is not set.')
+
     appFilename = path.join(OutputDir, name.toLowerCase() + '.js')
     
     if Apps[name]? then return callback(new ApiError("App #{name} already exists"), null)

@@ -1,65 +1,27 @@
 <ul class="nav nav-pills">
 	<% if (data.apps.length > 0) { %>
-	<% if (data.application) { %>
-	<li class="dropdown<% if (data.active === 'forms' || data.active === null) { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Forms<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/forms">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/forms/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown<% if (data.active === 'fieldsets') { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Fieldsets<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/fieldsets">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/fieldsets/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown<% if (data.active === 'fields') { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Fields<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/fields">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/fields/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown<% if (data.active === 'buttons') { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Buttons<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/buttons">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/buttons/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown<% if (data.active === 'validations') { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Validations<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/validations">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/validations/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown<% if (data.active === 'decorators') { print(' active') } %>">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Decorators<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<li><a href="/<%= data.application %>/decorators">List</a></li>
-			<li class="divider"></li>
-			<li><a href="/<%= data.application %>/decorators/create">Create New</a></li>
-		</ul>
-	</li>
-	<li class="dropdown">
-		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Applications<b class="caret"></b></a>
-		<ul class="dropdown-menu">
-			<% _.each(data.apps, function(item) { %>
-			<li><a href="#" data-switch-app="<%= item.id %>"><%= item.id %></a></li>
-			<% }) %>
-			<li class="divider"></li>
-			<li><a href="/">List</a></li>
-			<li><a data-createApp href="#">Create New</a></li>
-		</ul>
-	</li>
+	<% if (data.application) { 
+		_.each(['forms', 'fieldsets', 'fields', 'buttons', 'validations', 'decorators'], function(item, i) { %>
+		<li class="dropdown<% if (data.active === item || data.active === null) { print(' active') } %>">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= Helpers.ucFirst(item) %><b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="/<%= data.application + '/' + item %>">List</a></li>
+				<li class="divider"></li>
+				<li><a href="/<%= data.application + '/' + item %>/create">Create New</a></li>
+			</ul>
+		</li>
+		<% }); %>
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Applications<b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<% _.each(data.apps, function(item) { %>
+				<li><a href="#" data-switch-app="<%= item.id %>"><%= item.id %></a></li>
+				<% }) %>
+				<li class="divider"></li>
+				<li><a href="/">List</a></li>
+				<li><a data-createApp href="#">Create New</a></li>
+			</ul>
+		</li>
 	<% } else { %>
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Choose Application<b class="caret"></b></a>

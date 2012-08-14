@@ -14,12 +14,13 @@ var express = require('express')
 
   // Coffeepress the app, convert to javascript and optionally compress
   , _ = require('underscore')
-  , BuildIt = require('buildit');
+  , BuildIt = require('buildit')
   
-// The Base Express App & Api
-var app = express()
+  // The Base Express App & Api
+  , app = express()
   , api = require('./app/api')
-  , port = 3000;
+  , port = 3000
+  ;
 
 // Init the app, generating all coffee, js & css assets
 require('./app/initialize');
@@ -57,6 +58,7 @@ app.post('/api/applications', function(req, res) {
   });
 });
 
+// Delete an application
 app['delete']('/api/applications/:name', function(req, res) {
   res.set('Content-Type', 'text/javascript');
   api.deleteApp(req.params.name, function(err, msg) {
@@ -64,31 +66,43 @@ app['delete']('/api/applications/:name', function(req, res) {
   });
 });
 
-// Handle the API calls with a single function
+// POST, PUT, DELETE calls for items
 app.all('/api/:app/:base?/:item?', function(req, res) {
+  
+  var id;
 
-  res.set('Content-Type', 'text/javascript');
+  var checkKey = function(){
+    if (_.isEmpty(req.body.key)) {
+      return res.send(400, ["The key isn't set"]);
+    }
+  };
+
   switch(req.route.method) {
     case 'post':
-      try {
-        api.createItem(req.params.app, req.params.base, req.body.key, req.body);
-        res.send(200, {
-          id : req.body.key
+      checkKey();
+      id = _.clone(req.body.key);
+      api.createItem(req.params.app, req.params.base, req.body.key, req.body, function(err) {
+        if (err) res.send(400, [err.message]);
+        res.json({
+          id : id
         });
-      } catch (e) {
-        res.send(400, e.message);
-      }
+      });
     break;
     case 'put':
-      try {
-        res.send(200, api.updateItem(req.params.app, req.params.base, req.params.item, req.body));
-      } catch (e) {
-        console.log(e.message);
-        res.send(400, e.message);
-      }
+      checkKey();
+      id = _.clone(req.body.key);
+      api.updateItem(req.params.app, req.params.base, req.params.item, req.body, function(err){
+        if (err) res.send(400, [err.message]);
+        res.json({
+          id : id
+        });
+      });
     break;
     case 'delete':
-      res.send(200, api.deleteItem(req.params.app, req.params.base, req.params.item));
+      api.deleteItem(req.params.app, req.params.base, req.params.item, function(err){
+        if (err) res.send(400, [err.message]);
+        res.send(200, {});
+      });
     break;
   }
 });

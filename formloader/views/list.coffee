@@ -23,4 +23,9 @@ Pages['list'] = V.extend
 
   deleteItem : (e) ->
     e.preventDefault()
-    @collection.get($(e.currentTarget).attr('data-deleteItem')).destroy()
+    if confirm("Are you sure you want to delete this '#{@type}' item")
+      item = $(e.currentTarget).attr('data-deleteItem')
+      @collection.get(item).destroy
+        wait:true
+        success : () =>
+          @jGrowl('success', "The #{@type} - #{item} was successfully deleted")

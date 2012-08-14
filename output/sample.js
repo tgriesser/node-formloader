@@ -14,8 +14,7 @@ exports.sample = {
       "tagName": "a",
       "value": "Sign In",
       "attributes": {
-        "class": "btn",
-        "id": "tim"
+        "class": "btn"
       }
     }
   },
@@ -61,9 +60,6 @@ exports.sample = {
 },
     "checkbox": function (){
   this.$el.attr('name', 'checky');
-},
-    "field": function ($field) {
-  return this.templates.field();
 },
     "item": function (){
   var tim;
