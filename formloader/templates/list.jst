@@ -13,7 +13,7 @@
 				  href="/<% if (data.application){ print(data.application+'/'+data.type+'/'+item.id) } else { print(item.id) } %>">
 				  <i class="icon-pencil">&nbsp;</i></a>
 				  <a class="btn" data-viewItem><i class="icon-search">&nbsp;</i></a>
-				  <a class="btn" data-deleteItem="<%= data.type+'/'+item.id %>"><i class="icon-trash">&nbsp;</i></a>
+				  <a class="btn" data-deleteItem="<%= item.id %>"><i class="icon-trash">&nbsp;</i></a>
 				</div>
 			</div>
 		</div>

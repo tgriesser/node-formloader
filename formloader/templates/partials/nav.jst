@@ -56,6 +56,7 @@
 			<li><a href="#" data-switch-app="<%= item.id %>"><%= item.id %></a></li>
 			<% }) %>
 			<li class="divider"></li>
+			<li><a href="/">List</a></li>
 			<li><a data-createApp href="#">Create New</a></li>
 		</ul>
 	</li>
@@ -66,7 +67,7 @@
 			<% _.each(data.apps, function(item) { %>
 			<li><a href="/<%= item.id %>"><%= item.id %></a></li>
 			<% }) %>
-			<li class="spacer"></li>
+			<li class="divider"></li>
 			<li><a data-createApp href="#">Create New</a></li>
 		</ul>
 	</li>

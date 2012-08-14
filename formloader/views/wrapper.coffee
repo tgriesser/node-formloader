@@ -23,9 +23,6 @@ Views.App = V.extend
     # Bind for app creation
     "click  a[data-createApp]" : "createApp"
     
-    # Delete an item
-    "click a[data-deleteItem]" : "deleteItem"
-
     "submit  form[data-createApp]" : (e) ->
       @saveForm e, null, (m) ->
         appCacheAdd(m.id)
@@ -36,9 +33,6 @@ Views.App = V.extend
   createApp : (e) ->
     e.preventDefault()
     $('#createApp').modal();
-
-  deleteItem : (e) ->
-    e.preventDefault()
 
   initialize : () ->
     @model = new Models.Application
@@ -76,4 +70,3 @@ Views.Main = V.extend
     @$el.empty()
     @$el.append(html)
     this
-  

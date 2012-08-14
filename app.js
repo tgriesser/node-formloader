@@ -57,6 +57,13 @@ app.post('/api/applications', function(req, res) {
   });
 });
 
+app['delete']('/api/applications/:name', function(req, res) {
+  res.set('Content-Type', 'text/javascript');
+  api.deleteApp(req.params.name, function(err, msg) {
+    res.send(200, {});
+  });
+});
+
 // Handle the API calls with a single function
 app.all('/api/:app/:base?/:item?', function(req, res) {
 
@@ -81,8 +88,7 @@ app.all('/api/:app/:base?/:item?', function(req, res) {
       }
     break;
     case 'delete':
-      console.log(req);
-      res.send(200, '');
+      res.send(200, api.deleteItem(req.params.app, req.params.base, req.params.item));
     break;
   }
 });

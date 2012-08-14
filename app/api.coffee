@@ -1,11 +1,14 @@
 
-# Require all modules
+# Required core modules
 fs   = require('fs')
 path = require('path')
 
-ObjectDump = require('objectdump')
-settings   = require('../settings')
+# Required Node Modules
 _          = require('underscore')
+ObjectDump = require('objectdump')
+
+# App settings
+settings   = require('../settings')
 
 # ApiError, for any api screw ups
 class ApiError
@@ -139,12 +142,25 @@ module.exports =
   # {string} - name  - application name
   # {string} - type  - type of item being removed
   # {string} - key   - name of the key being removed
-  removeItem : (name, type, key) ->
+  deleteItem : (name, type, key) ->
     if Apps[name]?[type]?[key]?
       app = Apps[name]
       delete app[type][key]
       updateItemRef(name, type, key)
       saveApp(name)
+
+  # Deletes an application
+  # {string} - name - application name
+  deleteApp : (name, callback) ->
+    appFilename = path.join(OutputDir, name + '.js')
+    
+    fs.exists appFilename, (exists) ->
+      if exists
+        fs.unlink appFilename, (err, resp) ->
+          delete Apps[name]
+          callback(err, resp);
+      else
+        throw new ApiError("File #{appFilename} doesn't exist");
 
   # Create a new application
   # {object}   - name - name of the app

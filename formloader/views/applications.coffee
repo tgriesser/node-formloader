@@ -66,11 +66,11 @@ Pages.baseObject = V.extend
       initSelection : (element, callback) ->
         custom = 0
         callback(_.reduce model.get(item), (memo, value, key) ->
-          if value.indexOf('function') isnt 0
-            memo.push({id: value, text:value})
-          else
+          if /function\s?\(/.test(value)
             memo.push({id: value, text:'customFn:'+custom})
             custom++
+          else
+            memo.push({id: value, text:value})
           memo
         , [])
 
@@ -162,19 +162,3 @@ Pages['application/list'] = V.extend
       apps : @collection.toJSON()
     }))
     this
-
-# A generic list
-Pages['list'] = V.extend
-  template : Templates['list']
-  initialize : (opts) ->
-    @type = opts.itemId
-    @collection = app.c[@type]
-  render : () ->
-    @$el.html(@template({
-      ucType : @type.charAt(0).toUpperCase() + @type.slice(1)
-      type : @type
-      collection : @collection.toJSON()
-      application : app.m.application.get('id')
-    }))
-    this
-
