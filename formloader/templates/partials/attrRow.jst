@@ -1,0 +1,11 @@
+<div class="row" style="margin-top:10px;">
+	<div class="span3 offset1">
+		<input name="attributes[key][]" <% if(data.key){ print("value="+data.key); } %> type="text" style="width:100%">
+	</div>
+	<div class="span4">
+		<input name="attributes[value][]" <% if(data.value){ print("value="+data.value); } %> type="text" style="width:100%">
+	</div>
+	<div class="span1 offset1">
+		<a data-removeAttribute class="btn btn-small btn-danger">-</a>
+	</div>
+</div>

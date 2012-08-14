@@ -1,0 +1,44 @@
+<% if (data.id) { %>
+<h3>Edit Fieldset - <%= data.id %></h3>
+<% } else { %>
+<h3>Create New Fieldset</h3>
+<% } %>
+<hr>
+
+<form class="form-horizontal">	
+
+	<div class="control-group">
+		<label class="control-label">Key:</label>
+		<div class="controls">
+			<input type="text" name="key" value="<% if(data.id){ print(data.id) } %>">
+			<span class="help-block">The name used when referring to the form in other locations</span>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label">Legend:</label>
+		<div class="controls">
+			<input type="text" name="legend" value="<% if(data.legend){ print(data.legend) } %>">
+			<span class="help-block">(Optional) If specified, this will be used as the &lt;legend> tag value for the fieldset</span>
+		</div>
+	</div>
+
+	<div data-select2="fields"/>
+	<div data-select2="buttons"/>
+	<div data-select2="validations"/>
+	<div data-select2="decorators"/>
+	
+	<hr>
+
+	<div id="attributes"></div>
+
+	<hr>
+
+	<div id="meta"></div>
+	
+	<div class="form-actions">
+		<button type="submit" class="btn-primary btn" value="Save">Save</button>
+		<button type="button" class="pull-right small btn" value="Preview">Preview</button>
+	</div>
+
+</form>

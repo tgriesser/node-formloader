@@ -1,0 +1,34 @@
+<% if (data.id) { %>
+<h3>Edit Button - <%= data.id %></h3>
+<% } else { %>
+<h3>Create New Button</h3>
+<% } %>
+<hr>
+
+<form class="form-horizontal">  
+
+  <div class="control-group">
+    <label class="control-label">Key:</label>
+    <div class="controls">
+      <input type="text" name="key" value="<% if(data.id){print(data.id)} %>">
+      <span class="help-block">The name used when referring to the decorator in other locations</span>
+    </div>
+  </div>
+
+  <div data-select2="validations"/>
+  <div data-select2="decorators"/>
+  
+  <hr>
+
+  <div id="attributes"></div>
+
+  <hr>
+
+  <div id="meta"></div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary btn" value="Save">Save</button>
+    <button type="button" class="pull-right small btn" value="Preview">Preview</button>
+  </div>
+
+</form>

@@ -1,0 +1,1 @@
+{{= c.press.once('styles/bootstrap.css', 'styles/jgrowl.css', 'styles/jqUI.css', 'styles/app.css', 'styles/select2.css') }}

@@ -1,0 +1,31 @@
+<% if (data.id) { %>
+<h3>Edit Validation - <%= data.id %></h3>
+<% } else { %>
+<h3>Create New Validation</h3>
+<% } %>
+<hr>
+
+<form class="form-horizontal">  
+
+  <div class="control-group">
+    <label class="control-label">Key:</label>
+    <div class="controls">
+      <input type="text" name="key" value="<% if(data.id){print(data.id)} %>">
+      <span class="help-block">The name used when referring to the validation in other locations</span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="textarea">Function Body</label>
+    <div class="controls">
+      <div id="editor"></div>
+      <textarea style="width:90%;height:200px;" name="value"><% if(data.value){print(data.value)} %></textarea>
+      <span class="help-block">The function block should not include a semicolon at the end</span>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn-primary btn">Save</button>
+  </div>
+
+</form>

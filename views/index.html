@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Formloader Application</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Simple form building, with validations on the server and client">
+	<meta name="author" content="Tim Griesser <tim@tgriesser.com>">
+
+	<link rel="stylesheet" href="/stylesheets/formloader.css">
+</head>
+<body>
+	<div id="app" class="container">
+		<div class="content">
+			<h1>Formloader</h1>
+			
+			<hr>
+			
+			<div id="subnav" class="subnav"></div>
+			
+			<br>
+
+			<!-- Application loads here -->
+			
+			<div id="formloader"></div>
+			
+			<!-- / Application -->
+
+			<hr>
+
+			<footer class="pull-center">
+					<p>&copy; tgriesser 2012</p>
+			</footer>
+		</div>
+	
+		<!-- Application Creation Modal -->
+
+		<div id="createApp" class="modal hide">
+			
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<a class="close" data-dismiss="modal">×</a>
+				<h3>Create new 'Application'</h3>
+			</div>
+			
+			<form data-createApp class="form-horizontal modal-form">
+
+				<!-- Modal Body -->
+				<div class="modal-body">
+					<p>A new application is the base unit for formloader, it contains all of the
+						forms, fields, fieldsets, validations, and decorators that are associated with an application.<br><br>
+						This is useful if you wish to have two similarly named fields which have different metadata and functionality
+						(i.e. an Admin app and a Frontend app, or a Server Side &amp; Client Side App)</p>
+
+					<hr>
+
+					<div class="control-group">
+						<label class="control-label">Application Name</label>
+						<div class="controls">
+							<input name="name" type="text">
+							<p class="help-block">The name of the application, (lowercase alphanumeric).</p>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Modal Footer -->
+				<div class="modal-footer">
+					<a href="#" class="btn" data-dismiss="modal">Close</a>
+					<button type="submit" class="btn btn-primary">Create App</button>
+				</div>
+			
+			</form>
+		
+		</div>
+
+	</div>
+
+	<script src="/javascripts/ace/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/javascripts/ace/src-noconflict/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/javascripts/formloader.js" type="text/javascript"></script>
+</body>
+</html>

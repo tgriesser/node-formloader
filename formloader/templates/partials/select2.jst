@@ -1,0 +1,25 @@
+<div class="control-group">
+  <label class="control-label"><%= data.ucType %>:</label>
+  <div class="controls">
+    <div class="row">
+      <div class="span7">
+        <input style="width:100%" id="<%= data.type %>" type="hidden">
+      </div>
+      <div class="span1">
+        <div class="btn-group">
+          <a href="#" class="btn btn-info">+</a>
+          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <!-- dropdown menu links -->
+            <li><a href="#">Create New</a></li>
+            <li><a href="#">Create Custom</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <span class="help-block">Start typing the "keys" of <%= data.type %> you have already created, 
+    or click the "+" to create a new one</span>
+  </div>
+</div>

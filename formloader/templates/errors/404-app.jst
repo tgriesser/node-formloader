@@ -1,0 +1,15 @@
+<h3>Sorry, the page you were looking for wasn't found</h3>
+<hr>
+<div class="row">
+	<div class="span6">
+	<p>Maybe try looking through one of the following applications
+		to edit and create some forms... or just <a href="application/create">create a new one</a></p>
+	</div>
+	<div class="span6">
+	<ul>
+		<% _.each(data.collection, function(item){ %>
+			<li><a href="/<%= item.name %>"><%= item.name %></a></li>
+		<% }); %>
+	</ul>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<h3><% if (data.application){ print('App "'+data.application + '": ') } %><%= data.ucType %></h3>
+<hr>
+<div class="row">
+	<div class="span12">
+	<% _.each(data.collection, function(item, i){ %>
+		<div class="row listItem">
+			<div class="span8">
+				<p><%= item.id %></p>
+			</div>
+			<div class="span2">
+				<div class="btn-group">
+				  <a class="btn" 
+				  href="/<% if (data.application){ print(data.application+'/'+data.type+'/'+item.id) } else { print(item.id) } %>">
+				  <i class="icon-pencil">&nbsp;</i></a>
+				  <a class="btn" data-viewItem><i class="icon-search">&nbsp;</i></a>
+				  <a class="btn" data-deleteItem="<%= data.type+'/'+item.id %>"><i class="icon-trash">&nbsp;</i></a>
+				</div>
+			</div>
+		</div>
+		<% }); %>
+		<div class="row">
+			<div class="span8">
+				<a href="/<% if (data.application){ print(data.application+'/'+data.type) } else { print('applications') } %>/create" 
+				class="btn btn-success btn-large">Create New</a>
+			</div>
+		</div>
+	</div>
+</div>

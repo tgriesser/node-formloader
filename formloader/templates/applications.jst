@@ -1,0 +1,27 @@
+<% if (data.apps.length > 0) { %>
+
+<h3>All Applications</h3>
+<hr>
+<table class="table">
+	<thead>
+	<tr>
+		<th>Application Name</th>
+		<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody>
+		<% _.each(data.apps, function(item) { %>
+		<tr>
+			<td><%= item.id %></td>
+			<td><a class="btn" href="/<%= item.id %>">Edit</a></td>
+			<td><a class="btn btn-danger" data-delete-app>Delete</a></td>
+		</tr>
+		<% }); %>
+	</tbody>
+</table>
+
+<% } else { %>
+
+// ASK TO CREATE A NEW APP
+
+<% } %>
