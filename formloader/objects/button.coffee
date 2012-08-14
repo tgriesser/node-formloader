@@ -2,8 +2,7 @@
 Models.Button = M.extend
   defaults :
     tagName    : 'button'
-    value      : 'Button'
-
+    
     # Common
     meta        : null
     decorators  : null

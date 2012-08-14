@@ -25,31 +25,33 @@ exports.formloader = {
   "fields": {
     "validations": {
       "attributes": {
-        "id": "validations"
+        "data-select2": "validations"
       }
     },
     "fields": {
       "attributes": {
-        "id": "fields"
+        "data-select2": "fields"
       }
     },
     "decorators": {
       "attributes": {
-        "id": "decorators"
+        "data-select2": "decorators"
       }
     },
     "buttons": {
       "attributes": {
-        "id": "buttons"
+        "data-select2": "buttons"
       }
     },
     "fieldsets": {
       "attributes": {
-        "id": "fieldsets"
+        "data-select2": "fieldsets"
       }
     },
     "key": {
-    
+      "meta": {
+        "help": "The name used when referring to the <%= type %> in other locations"
+      }
     },
     "functionBody": {
       "attributes": {
@@ -62,10 +64,10 @@ exports.formloader = {
   },
   "buttons": {
     "save": {
-      "value": "Button"
+
     },
     "preview": {
-      "value": "Button"
+
     }
   },
   "validations": {
