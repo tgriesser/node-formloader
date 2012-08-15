@@ -79,6 +79,6 @@ exports.formloader = {
 }
   },
   "templates": {
-    "ii": "<form class=\"form-horizontal\">\n<fieldset>\n  <legend>Legend text</legend>\n  <div class=\"control-group\">\n    <label class=\"control-label\" for=\"input01\">Text input</label>\n    <div class=\"controls\">\n      <input type=\"text\" class=\"input-xlarge\" id=\"input01\">\n      <p class=\"help-block\">Supporting help text</p>\n    </div>\n  </div>\n</fieldset>\n</form>"
+    "ace": "<div class=\"control-group\">\n<label class=\"control-label\"><%= data.label %></label>\n<div class=\"controls\">\n  <div id=\"editor\"></div>\n  <span class=\"help-block\">The <%= data.meta.name %> block should not include a semicolon at the end</span>\n</div>\n</div>"
   }
 };

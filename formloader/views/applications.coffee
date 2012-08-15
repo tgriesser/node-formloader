@@ -1,3 +1,4 @@
+
 # Base object for all items with Select2 elements
 Pages.baseObject = V.extend
   
@@ -29,22 +30,49 @@ Pages.baseObject = V.extend
   
   # Initialize an 'ace' editor on the appropriate items.
   initAce : (mode = "ace/mode/javascript") ->
-    $textarea = @$('textarea').hide()
     @editor = ace.edit(@$("#editor")[0])
     
+    # Session, Mode, Validation
     aSess = @editor.getSession()
-    aSess.setTabSize(2)
-    aSess.setUseSoftTabs(true)
-    aSess.setValue($textarea.val())
-    aSess.setUseWrapMode(true)
     aSess.setMode(mode)
     aSess.setUseWorker(false)
+
+    # Style
+    aSess.setTabSize(2)
+    aSess.setUseSoftTabs(true)
+    aSess.setUseWrapMode(true)
+    
+    # Value
+    aSess.setValue(@model.get('value').replace(/\\n/g, '\n'))
+    
     aSess.on 'change', () =>
-      $textarea.val(@editor.getSession().getValue())
+      @model.set({'value' : @editor.getSession().getValue()}, {silent:true})
 
   # Initializes a select for one of the main items  
   # (fieldset, field, button, decorator, validation)
   initSelect : (item, model, data = []) ->
+
+    data = do () ->
+      _.union(
+        _.map(data, (value) ->
+          return {id : value, text : value}
+        ), app.c[item].reduce (memo, value, key) -> 
+          memo.push({id : value.id, text: value.id})
+          memo
+        , [])
+
+    if item is 'templates'
+      @$("#templates").val('bootstrap2').select2({
+        
+        placeholder: "(optional) - choose a template",
+
+        # Creates the list of things that we're using
+        data : data
+
+        allowClear: true
+      })
+
+      return this
 
     # Initialize the select2
     @$("##{item}").val(model.get(item)).select2
@@ -53,14 +81,7 @@ Pages.baseObject = V.extend
       multiple : true
       
       # Creates the list of things that we're using
-      data : do () ->
-        _.union(
-          _.map data, (value) ->
-            return {id : value, text : value}
-          , app.c[item].reduce (memo, value, key) -> 
-            memo.push({id : value.id, text: value.id})
-            memo
-          , [])
+      data : data
 
       # Creates the initial tags based on the model
       initSelection : (element, callback) ->
@@ -140,7 +161,10 @@ Pages.baseObject = V.extend
       
       @$('[data-select2]').each () ->
         val = $(this).attr('data-select2')
-        $(this).html(Templates['partials/select2']({
+        tmpl = Templates['partials/select2'] 
+        if val is 'templates'
+          tmpl = Templates['partials/templateSelect']
+        $(this).html(tmpl({
           ucType : val.charAt(0).toUpperCase() + val.slice(1)
           type : val
         }))
