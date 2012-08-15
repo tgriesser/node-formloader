@@ -2,6 +2,7 @@
 Models.Fieldset = M.extend
   defaults :
     tagName     : 'fieldset'
+
     legend      : null
     fields      : null
 

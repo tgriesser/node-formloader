@@ -65,5 +65,6 @@ exports.sample = {
   var tim;
   tim = 'two';
 }
-  }
+  },
+  "templates" : {}
 };

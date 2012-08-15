@@ -4,8 +4,9 @@ fs   = require('fs')
 path = require('path')
 
 # Required Node Modules
-_          = require('underscore')
-ObjectDump = require('objectdump')
+_           = require('underscore')
+coffee      = require('coffee-script')
+ObjectDump  = require('objectdump')
 
 # App settings
 settings   = require('../settings')
@@ -23,6 +24,7 @@ class ApiError
 
 # Namespaces & Constants
 Apps = {}
+AppCache = {}
 OutputDir = path.join(__dirname, '../', settings.outputDir);
 
 # Prep the Backbone's JSON by removing the ID and any empties
@@ -40,11 +42,20 @@ prepInput = (json, type) ->
 
     # Unnecessary to store the default tag
     if json.tagName is settings.defaultTags[type] 
+      
       delete json.tagName
 
-  if _.indexOf(['validations', 'decorators'], type) isnt -1
-  
+  if _.indexOf(['validations', 'decorators', 'templates'], type) isnt -1
+
+    if type is 'templates'
+      tmplStr = coffee.compile('"""' + json.value + '"""', {
+        bare : true
+      })
+      .trim()
+      return tmplStr.slice(1, tmplStr.length - 2).replace(/\\"/g, '"')
+      
     return json.value
+    
   _.each json, (value, key) ->
   
     if (_.isEmpty(value) and ! _.isString(value))
@@ -190,7 +201,7 @@ module.exports =
         
         # Build the initial appCache object
         Apps[name] = {
-          forms : {}, fields : {}, fieldsets : {}, buttons : {}, validations : {}, decorators : {}
+          forms : {}, fields : {}, fieldsets : {}, buttons : {}, validations : {}, decorators : {}, templates : {}
         }
         
         # Create the file

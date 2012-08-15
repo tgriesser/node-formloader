@@ -1,7 +1,7 @@
 exports.formloader = {
   "forms": {
     "fieldsets": {
-      "fields": ["key","fields","buttons","decorators","validations"],
+      "fields": ["key","fields","buttons","validations","decorators"],
       "buttons": ["save","preview"]
     },
     "fields": {
@@ -64,16 +64,21 @@ exports.formloader = {
   },
   "buttons": {
     "save": {
-
+    
     },
     "preview": {
-
+    
     }
   },
   "validations": {
   
   },
   "decorators": {
-  
+    "item": function (){
+  return 'eats';
+}
+  },
+  "templates": {
+    "ii": "<form class=\"form-horizontal\">\n<fieldset>\n  <legend>Legend text</legend>\n  <div class=\"control-group\">\n    <label class=\"control-label\" for=\"input01\">Text input</label>\n    <div class=\"controls\">\n      <input type=\"text\" class=\"input-xlarge\" id=\"input01\">\n      <p class=\"help-block\">Supporting help text</p>\n    </div>\n  </div>\n</fieldset>\n</form>"
   }
 };

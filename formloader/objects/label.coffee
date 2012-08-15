@@ -10,5 +10,6 @@ Models.Label = M.extend
     validations : null
     
 Collections.Labels = C.extend
-  url : '/api/labels'
+  url : () ->
+    "/api/#{app.m.application.id}/labels"
   model : Models.Label

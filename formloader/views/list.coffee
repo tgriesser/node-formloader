@@ -1,5 +1,5 @@
 
-# A generic list
+# A generic list of items
 Pages['list'] = V.extend
   events : 
     # Delete an item
@@ -26,6 +26,6 @@ Pages['list'] = V.extend
     if confirm("Are you sure you want to delete this '#{@type}' item")
       item = $(e.currentTarget).attr('data-deleteItem')
       @collection.get(item).destroy
-        wait:true
+        wait : true
         success : () =>
           @jGrowl('success', "The #{@type} - #{item} was successfully deleted")

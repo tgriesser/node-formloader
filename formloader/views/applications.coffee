@@ -28,7 +28,7 @@ Pages.baseObject = V.extend
       console.log('callback')
   
   # Initialize an 'ace' editor on the appropriate items.
-  initAce : () ->
+  initAce : (mode = "ace/mode/javascript") ->
     $textarea = @$('textarea').hide()
     @editor = ace.edit(@$("#editor")[0])
     
@@ -37,14 +37,14 @@ Pages.baseObject = V.extend
     aSess.setUseSoftTabs(true)
     aSess.setValue($textarea.val())
     aSess.setUseWrapMode(true)
-    aSess.setMode("ace/mode/javascript")
+    aSess.setMode(mode)
     aSess.setUseWorker(false)
     aSess.on 'change', () =>
       $textarea.val(@editor.getSession().getValue())
 
   # Initializes a select for one of the main items  
   # (fieldset, field, button, decorator, validation)
-  initSelect : (item, model) ->
+  initSelect : (item, model, data = []) ->
 
     # Initialize the select2
     @$("##{item}").val(model.get(item)).select2
@@ -53,14 +53,14 @@ Pages.baseObject = V.extend
       multiple : true
       
       # Creates the list of things that we're using
-      query : (query) ->
-        data = {
-          results : app.c[item].reduce (memo, value, key) -> 
+      data : do () ->
+        _.union(
+          _.map data, (value) ->
+            return {id : value, text : value}
+          , app.c[item].reduce (memo, value, key) -> 
             memo.push({id : value.id, text: value.id})
             memo
-          , []
-        }
-        query.callback(data)
+          , [])
 
       # Creates the initial tags based on the model
       initSelection : (element, callback) ->
@@ -144,7 +144,7 @@ Pages.baseObject = V.extend
           ucType : val.charAt(0).toUpperCase() + val.slice(1)
           type : val
         }))
-        CurrentPage.initSelect.call(CurrentPage, val, CurrentPage.model)
+        CurrentPage.initSelect.call(CurrentPage, val, CurrentPage.model, app.c[val].selectOpts or [])
 
       if @item? then @renderAttr()
       @renderMeta()

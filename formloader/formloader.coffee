@@ -45,6 +45,7 @@ app.c.fields       = new Collections.Fields
 app.c.buttons      = new Collections.Buttons
 app.c.validations  = new Collections.Validations
 app.c.decorators   = new Collections.Decorators
+app.c.templates    = new Collections.Templates
 
 # Formloader Instances
 app.c.applications = new Collections.Applications
@@ -64,14 +65,14 @@ AppCache = {};
 # Add an item to the app cache
 appCacheAdd = (name) ->
   AppCache[name] = {}
-  _.each ['forms', 'fields', 'fieldsets', 'buttons', 'validations', 'decorators'], (item) ->
+  _.each ['forms', 'fields', 'fieldsets', 'buttons', 'validations', 'decorators', 'templates'], (item) ->
     AppCache[name][item] = []
 
 # Prep the application object
 prepObj = (obj) ->
   _.each obj, (v, k, list) ->
     list[k] = _.reduce v, (memo, value, key) ->
-      if k is 'decorators' or k is 'validations'
+      if k is 'decorators' or k is 'validations' or k is 'templates'
         memo.push({id : key, value : value})
       else
         memo.push(_.extend(value, {id : key}))

@@ -1,7 +1,7 @@
 <% if (data.id) { %>
-<h3>Edit Validation - <%= data.id %></h3>
+<h3>Edit Template - <%= data.id %></h3>
 <% } else { %>
-<h3>Create New Validation</h3>
+<h3>Create New Template</h3>
 <% } %>
 <hr>
 
@@ -11,16 +11,16 @@
     <label class="control-label">Key:</label>
     <div class="controls">
       <input type="text" name="key" value="<% if(data.id){print(data.id)} %>">
-      <span class="help-block">The name used when referring to the validation in other locations</span>
+      <span class="help-block">The name used when referring to the template in other locations</span>
     </div>
   </div>
 
   <div class="control-group">
-    <label class="control-label">Function Body</label>
+    <label class="control-label">Template Body</label>
     <div class="controls">
       <div id="editor"></div>
       <textarea style="width:90%;height:200px;" name="value"><% if(data.value){print(data.value)} %></textarea>
-      <span class="help-block">The function block should not include a semicolon at the end</span>
+      <span class="help-block">The template to use for the form item</span>
     </div>
   </div>
 

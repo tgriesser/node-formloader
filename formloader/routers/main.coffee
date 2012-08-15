@@ -10,7 +10,7 @@ Routers.Main = R.extend
     
     '*base' : 'base'
 
-  validTypes : ['applications', 'fields', 'forms', 'fieldsets', 'decorators', 'validations', 'buttons']
+  validTypes : ['applications', 'fields', 'forms', 'fieldsets', 'decorators', 'validations', 'buttons', 'templates']
 
   initialize : () ->
     @on 'all', () ->

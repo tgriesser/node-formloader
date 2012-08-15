@@ -30,6 +30,7 @@ Models.Application = M.extend
         app.c.buttons.reset(appCache.buttons)
         app.c.validations.reset(appCache.validations)
         app.c.decorators.reset(appCache.decorators)
+        app.c.templates.reset(appCache.templates)
 
         # Repaint the nav so all navigation routes are relative
         app.v.nav.trigger('repaint')

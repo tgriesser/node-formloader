@@ -71,15 +71,12 @@ app.all('/api/:app/:base?/:item?', function(req, res) {
   
   var id;
 
-  var checkKey = function(){
-    if (_.isEmpty(req.body.key)) {
-      return res.send(400, ["The key isn't set"]);
-    }
-  };
-
+  if (_.isEmpty(req.body.key) && req.route.method !== 'delete') {
+    return res.send(400, ["The key isn't set"]);
+  }
+  
   switch(req.route.method) {
     case 'post':
-      checkKey();
       id = _.clone(req.body.key);
       api.createItem(req.params.app, req.params.base, req.body.key, req.body, function(err) {
         if (err) res.send(400, [err.message]);
@@ -89,7 +86,6 @@ app.all('/api/:app/:base?/:item?', function(req, res) {
       });
     break;
     case 'put':
-      checkKey();
       id = _.clone(req.body.key);
       api.updateItem(req.params.app, req.params.base, req.params.item, req.body, function(err){
         if (err) res.send(400, [err.message]);
