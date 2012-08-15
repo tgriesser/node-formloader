@@ -1,7 +1,7 @@
 /*
  Copyright 2012 Igor Vaynberg
 
- Version: @@ver@@ Timestamp: @@timestamp@@
+ Version: 3.1 Timestamp: Tue Aug 14 09:05:17 PDT 2012
 
  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in
  compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
@@ -1333,7 +1333,7 @@
             var container = $("<div></div>", {
                 "class": "select2-container"
             }).html([
-                "    <a href='#' onclick='return false;' class='select2-choice'>",
+                "    <a href='javascript:void(0)' class='select2-choice'>",
                 "   <span></span><abbr class='select2-search-choice-close' style='display:none;'></abbr>",
                 "   <div><b></b></div>" ,
                 "</a>",

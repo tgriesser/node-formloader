@@ -53,58 +53,69 @@ Pages.baseObject = V.extend
   initSelect : (item, model, data = []) ->
 
     data = do () ->
+      custom = 0
       _.union(
         _.map(data, (value) ->
           return {id : value, text : value}
         ), app.c[item].reduce (memo, value, key) -> 
-          memo.push({id : value.id, text: value.id})
+          if /function\s?\(/.test(value)
+            memo.push({id: value.id, text:'customFn:'+custom})
+            custom++
+          else
+            memo.push({id: value.id, text:value.id})
           memo
         , [])
 
     if item is 'templates'
-      @$("#templates").val('bootstrap2').select2({
+
+      @$("#templates").val(model.get(item)).select2({
         
         placeholder: "(optional) - choose a template",
 
         # Creates the list of things that we're using
         data : data
 
-        allowClear: true
+        allowClear : true
+
+        initSelection : (element, callback) ->
+          callback({id : model.get(item), text : model.get(item)})
       })
 
-      return this
+    else
 
-    # Initialize the select2
-    @$("##{item}").val(model.get(item)).select2
-      
-      # Allow multiple items for each of the initSelect types
-      multiple : true
-      
-      # Creates the list of things that we're using
-      data : data
+      # Initialize the select2
+      @$("##{item}").val(model.get(item)).select2
+        
+        # Allow multiple items for each of the initSelect types
+        multiple : true
+        
+        # Creates the list of things that we're using
+        data : data
 
-      # Creates the initial tags based on the model
-      initSelection : (element, callback) ->
-        custom = 0
-        callback(_.reduce model.get(item), (memo, value, key) ->
-          if /function\s?\(/.test(value)
-            memo.push({id: value, text:'customFn:'+custom})
-            custom++
-          else
-            memo.push({id: value, text:value})
-          memo
-        , [])
+        # Creates the initial tags based on the model
+        initSelection : (element, callback) ->
+          custom = 0
+          callback(_.reduce model.get(item), (memo, value, key) ->
+            if /function\s?\(/.test(value)
+              memo.push({id: value, text:'customFn:'+custom})
+              custom++
+            else
+              memo.push({id: value, text:value})
+            memo
+          , [])
+
+      @$("##{item}").select2("container").find("ul.select2-choices").sortable
+          containment: 'parent',
+          start: () =>
+            @$("##{item}").select2("onSortStart")
+          update: () =>
+            @$("##{item}").select2("onSortEnd")
+      
 
     @$("##{item}").on "change", () =>
       @$("##{item}_val").html($("##{item}").val()) 
     
-    @$("##{item}").select2("container").find("ul.select2-choices").sortable
-        containment: 'parent',
-        start: () =>
-          @$("##{item}").select2("onSortStart")
-        update: () =>
-          @$("##{item}").select2("onSortEnd")
-    
+   
     this
 
   template : (params) ->

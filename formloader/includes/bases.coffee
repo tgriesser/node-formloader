@@ -50,10 +50,13 @@ V = Backbone.View.extend
       else
         form[type] = {}
 
-    _.each ['fieldsets','fields','buttons','validations','decorators'], (type) ->
+    _.each ['fieldsets','fields','buttons','validations','decorators','templates'], (type) ->
       value = @$("##{type}").val()
       if value?
-        form[type] = _.compact(value.split(','))
+        if type isnt 'templates'
+          form[type] = _.compact(value.split(','))
+        else
+          form[type] = value
       else
         form[type] = []
 

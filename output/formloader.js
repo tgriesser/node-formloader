@@ -2,7 +2,8 @@ exports.formloader = {
   "forms": {
     "fieldsets": {
       "fields": ["key","fields","buttons","validations","decorators"],
-      "buttons": ["save","preview"]
+      "buttons": ["save","preview"],
+      "templates": "ace"
     },
     "fields": {
       "fields": ["key","validations","decorators"],
@@ -12,7 +13,8 @@ exports.formloader = {
       "fields": ["key","validations","decorators"]
     },
     "validations": {
-      "fields": ["key","functionBody"]
+      "fields": ["key","functionBody"],
+      "templates": ""
     },
     "decorators": {
       "fields": ["key","functionBody"]
