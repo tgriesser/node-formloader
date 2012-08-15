@@ -9,5 +9,4 @@ ehthumbs.db
 Thumbs.db
 /node_modules
 /public/stylesheets/formloader*
-/public/javascripts/ace/*
 /public/javascripts/formloader*
