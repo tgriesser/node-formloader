@@ -1,12 +1,11 @@
 
 Models.Validation = M.extend
   defaults :
-    name       : ""
-    type       : "" # Preset, regex, function, module, etc.
+    name  : ""
+    value : ""
     
     # Common
     meta        : null
-    decorators  : null
     attributes  : null
     validations : null
   
@@ -18,4 +17,6 @@ Collections.Validations = C.extend
     'maxLength', 'minLength', 'validEmail', 'validEmails', 'any', 'include', 
     'has', 'isEmpty', 'isEqual', 'isElement', 'isArray', 'isObject', 'isArguments', 
     'isFunction', 'isString', 'isNumber', 'isFinite', 'isBoolean', 'isDate', 'isRegExp', 
-    'isNaN', 'isNull', 'isUndefined']
+    'isNaN', 'isNull', 'isUndefined', 'integer', 'numeric', 'integer', 'decimal', 'alpha',
+    'alphaNumeric', 'alphaDash', 'alphaUnderscore', 'natural', 'naturalNonZero', 'ip4',
+    'base64']

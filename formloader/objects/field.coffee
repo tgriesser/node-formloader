@@ -3,6 +3,7 @@ Models.Field = M.extend
   defaults :
     tagName     : 'input'
     label       : null
+    templates   : null
     
     # Common
     meta        : null

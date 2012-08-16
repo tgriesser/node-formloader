@@ -4,6 +4,9 @@ Models.Fieldset = M.extend
     tagName     : 'fieldset'
 
     legend      : null
+    templates   : null
+
+    # Select2 Items
     fields      : null
 
     # Common

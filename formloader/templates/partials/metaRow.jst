@@ -1,9 +1,9 @@
 <div class="row" style="margin-top:10px;">
 	<div class="span3 offset1">
-		<input name="meta[key][]" type="text" <% if(data.key){ print("value="+data.key); } %> style="width:100%">
+		<input name="meta[key][]" type="text" <% if(data.key){ %>value="<%= data.key %>"<% } %> style="width:100%">
 	</div>
 	<div class="span4">
-		<input name="meta[value][]" type="text" <% if(data.value){ print("value="+data.value); } %> style="width:100%">
+		<input name="meta[value][]" type="text" <% if(data.value){ %>value="<%= data.value %>"<% } %> style="width:100%">
 	</div>
 	<div class="span1 offset1">
 		<a data-removeMeta class="btn btn-small btn-danger">-</a>

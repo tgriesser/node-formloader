@@ -24,7 +24,7 @@ class ApiError
 
 # Namespaces & Constants
 Apps = {}
-AppCache = {}
+
 OutputDir = path.join(__dirname, '../', settings.outputDir);
 
 # Prep the Backbone's JSON by removing the ID and any empties
@@ -47,13 +47,6 @@ prepInput = (json, type) ->
 
   if _.indexOf(['validations', 'decorators', 'templates'], type) isnt -1
 
-    if type is 'templates'
-      tmplStr = coffee.compile('"""' + json.value + '"""', {
-        bare : true
-      })
-      .trim()
-      return tmplStr.slice(1, tmplStr.length - 2).replace(/\\"/g, '"')
-      
     return json.value
     
   _.each json, (value, key) ->
@@ -67,9 +60,18 @@ prepInput = (json, type) ->
 # {string} - name - name of the app being saved
 saveApp = (name, callback) ->
 
-  output = new ObjectDump(eval(Apps[name])).render(settings.dump(name));
+  # Since everything is JSON friendly, stringify and parse to deep clone before saving. 
+  appSave = JSON.stringify(Apps[name]);
+  appSaveBody = JSON.parse(appSave);
+  
+  # Ensure that all templates are formatted properly
+  _.each appSaveBody.templates, (value, key) ->
+    appSaveBody.templates[key] = value.replace(/\n/g, '\\n')
 
-  # Create the file
+  # Eval to put functions back to the correct location
+  output = new ObjectDump(eval(appSaveBody)).render(settings.dump(name));
+
+  # Write the output
   fs.writeFile path.join(OutputDir, name.toLowerCase() + '.js'), output, 'UTF-8', (err) ->
     
     if callback? then callback(err)

@@ -1,13 +1,14 @@
 exports.formloader = {
   "forms": {
     "fieldsets": {
+      "templates": "",
       "fields": ["key","fields","buttons","validations","decorators"],
-      "buttons": ["save","preview"],
-      "templates": "ace"
+      "buttons": ["save","preview"]
     },
     "fields": {
       "fields": ["key","validations","decorators"],
-      "buttons": ["save","preview"]
+      "buttons": ["save","preview"],
+      "templates": ""
     },
     "buttons": {
       "fields": ["key","validations","decorators"]
@@ -51,9 +52,11 @@ exports.formloader = {
       }
     },
     "key": {
+      "templates": "bootInput",
       "meta": {
-        "help": "The name used when referring to the <%= type %> in other locations"
-      }
+        "help-block": "The name used when referring to the form in other locations"
+      },
+      "validations": ["required","alphaUnderscore"]
     },
     "functionBody": {
       "attributes": {
@@ -81,6 +84,6 @@ exports.formloader = {
 }
   },
   "templates": {
-    "ace": "<div class=\"control-group\">\n<label class=\"control-label\"><%= data.label %></label>\n<div class=\"controls\">\n  <div id=\"editor\"></div>\n  <span class=\"help-block\">The <%= data.meta.name %> block should not include a semicolon at the end</span>\n</div>\n</div>"
+    "bootInput": "<div id=\"meg\">\n  <input class=\"tim\"/>\n</div>"
   }
 };

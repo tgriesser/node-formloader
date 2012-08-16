@@ -2,12 +2,13 @@
 Models.Form = M.extend
   defaults :
     tagName     : 'form'
+    templates   : null
     
-    # Items
+    # Select2 Items
     fieldsets   : null
     fields      : null
     buttons     : null
-    
+
     # Common
     meta        : null
     decorators  : null
