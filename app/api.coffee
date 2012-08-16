@@ -94,6 +94,11 @@ updateItemRef = (name, type, key, value) ->
             v2[type][i] = value 
           else 
             v2[type] = _.without(v2[type], key)
+      else if v2[type] is key
+        if value?
+          v2[type] = value
+        else
+          delete v2[type]
 
 # Initialize the Formloader Applications from the fs
 # {string} - outputDir - directory where the files are read from

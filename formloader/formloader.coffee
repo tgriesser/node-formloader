@@ -22,6 +22,9 @@ app =
   m : {}
   v : {}
   r : {}
+  
+  # Whether the app has been initialized
+  initialized : false
 
 # Require data.* for underscore templates
 _.templateSettings.variable = 'data'
@@ -80,15 +83,12 @@ prepObj = (obj) ->
     , []
   return obj
 
-# Init the app
-$ ->
-  
-  app.v.app  = new Views.App({el : $("#app") })
-  app.v.main = new Views.Main({el : $("#formloader")}).render()
-  
-  # Grab & Process all of the raw form object items
+bootstrapApp = () ->
+
   Backbone.sync('read', {}, {
-    url : '/api/bootstrap'
+    
+    url : '/api/bootstrap/'
+
     success : (data) ->
       appReset = []
 
@@ -99,12 +99,25 @@ $ ->
 
       app.c.applications.reset(appReset)
 
-      # Start the engines
-      app.v.nav  = new Views.TopNav({el : $("#subnav")}).render()
-      Backbone.history.start({pushState:true})
-    
+      if app.initialized is false
+        
+        app.initialized = true
+        
+        # Start the engines
+        app.v.nav  = new Views.TopNav({el : $("#subnav")}).render()
+        Backbone.history.start({pushState:true})
+      
     error : (data) ->
       alert('Error with initializing the application, check that your data isn\'t screwed up or anything')
   })
+
+# Init the app
+$ ->
+  
+  app.v.app  = new Views.App({el : $("#app") })
+  app.v.main = new Views.Main({el : $("#formloader")}).render()
+  
+  # Grab & Process all of the raw form object items
+  bootstrapApp()
   
 # End of Formloader.coffee

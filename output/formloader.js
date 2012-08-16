@@ -6,19 +6,19 @@ exports.formloader = {
       "buttons": ["save","preview"]
     },
     "fields": {
+      "templates": "",
       "fields": ["key","validations","decorators"],
-      "buttons": ["save","preview"],
-      "templates": ""
+      "buttons": ["save","preview"]
     },
     "buttons": {
       "fields": ["key","validations","decorators"]
     },
     "validations": {
-      "fields": ["key","functionBody"],
+      "fields": ["key"],
       "templates": ""
     },
     "decorators": {
-      "fields": ["key","functionBody"]
+      "fields": ["key"]
     },
     "forms": {
       "fields": ["key","fieldsets","fields","buttons","validations","decorators"],
@@ -52,16 +52,14 @@ exports.formloader = {
       }
     },
     "key": {
-      "templates": "bootInput",
+      "templates": "bootstrapInput5",
       "meta": {
         "help-block": "The name used when referring to the form in other locations"
       },
       "validations": ["required","alphaUnderscore"]
     },
-    "functionBody": {
-      "attributes": {
-        "name": "value"
-      }
+    "functionBlock": {
+      "templates": "aceFunction"
     }
   },
   "fieldsets": {
@@ -69,7 +67,7 @@ exports.formloader = {
   },
   "buttons": {
     "save": {
-    
+      "templates": "bootstrapInput5"
     },
     "preview": {
     
@@ -79,11 +77,11 @@ exports.formloader = {
   
   },
   "decorators": {
-    "item": function (){
-  return 'eats';
-}
+    "item": ""
   },
   "templates": {
-    "bootInput": "<div id=\"meg\">\n  <input class=\"tim\"/>\n</div>"
+    "bootstrapInput5": "<div id=\"meg\">\n  <input class=\"tims\"/>\n</div>",
+    "aceTemplate": "<div class=\"control-group\">\n  <label class=\"control-label\">Template Body</label>\n  <div class=\"controls\">\n    <div id=\"editor\"></div>\n    <span class=\"help-block\">The template to use for the form item</span>\n  </div>\n</div>",
+    "aceFunction": "<div class=\"control-group\">\n	<label class=\"control-label\">Function Body</label>\n	<div class=\"controls\">\n		<div id=\"editor\"></div>\n		<div class=\"clearfix\"></div>\n		<span class=\"help-block\">The function block should not include a semicolon at the end</span>\n	</div>\n</div>"
   }
 };

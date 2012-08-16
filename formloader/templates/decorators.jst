@@ -10,7 +10,7 @@
 	<div class="control-group">
 		<label class="control-label">Key:</label>
 		<div class="controls">
-			<input type="text" name="key" value="<% if(data.id){print(data.id)} %>">
+			<input type="text" name="key" value="<% if (data.id) { %> <%= data.id %> <% } %>">
 			<span class="help-block">The name used when referring to the decorator in other locations</span>
 		</div>
 	</div>

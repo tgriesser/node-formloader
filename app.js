@@ -11,7 +11,7 @@ var express = require('express')
   , path = require('path')
   , fs = require('fs')
   , coffee = require('coffee-script')
-
+  
   // Coffeepress the app, convert to javascript and optionally compress
   , _ = require('underscore')
   , BuildIt = require('buildit')
@@ -87,11 +87,17 @@ app.all('/api/:app/:base?/:item?', function(req, res) {
     break;
     case 'put':
       id = _.clone(req.body.key);
-      api.updateItem(req.params.app, req.params.base, req.params.item, req.body, function(err){
+      api.updateItem(req.params.app, req.params.base, req.params.item, req.body, function(err, emit){
         if (err) res.send(400, [err.message]);
         res.json({
           id : id
         });
+        if (emit) {
+          _.each(emit, function(v, k){
+            console.log(k);
+            // socket.emit(k, v);
+          });
+        }
       });
     break;
     case 'delete':

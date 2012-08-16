@@ -9,11 +9,17 @@ Pages.baseObject = V.extend
     "click a[data-addMeta]" : "addMeta"
     "click a[data-removeMeta]" : "removeMeta"
     "click li.select2-search-choice" : "clickTag"
-    
+    "dblclick [data-select2=templates]" : () ->
+      Helpers.windowOpen
+        url : "/#{app.m.application.id}/templates/#{@$("#templates").val()}"
+        windowName : 'templates'
+        windowOptions : 'location=0,status=0,width=900,height=740'
+
     "submit form"   : (e) ->
       e.preventDefault()
       @saveForm e, null, (m) =>
         if m.id?
+          # bootstrapApp(app.m.application.id)
           Backbone.history.navigate("/#{app.m.application.id}/#{@type}/#{m.id}", {trigger:true})
 
   # Opens an item for editing
@@ -25,8 +31,6 @@ Pages.baseObject = V.extend
       url : "/#{app.m.application.id}/#{item}/#{$(e.currentTarget).text().trim()}"
       windowName : item
       windowOptions : 'location=0,status=0,width=900,height=740'
-    , () ->
-      console.log('callback')
   
   # Initialize an 'ace' editor on the appropriate items.
   initAce : (mode = "ace/mode/javascript") ->
@@ -111,10 +115,8 @@ Pages.baseObject = V.extend
           update: () =>
             @$("##{item}").select2("onSortEnd")
       
-
     @$("##{item}").on "change", () =>
       @$("##{item}_val").html($("##{item}").val()) 
-    
    
     this
 

@@ -5,9 +5,9 @@ Models.Button = M.extend
     templates   : null
     
     # Common
-    meta        : null
-    decorators  : null
+    meta  : null
     attributes  : null
+    decorators  : null
     validations : null
 
 Collections.Buttons = C.extend

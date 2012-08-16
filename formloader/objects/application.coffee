@@ -34,6 +34,7 @@ Models.Application = M.extend
 
         # Repaint the nav so all navigation routes are relative
         app.v.nav.trigger('repaint')
+
     , @)
   
   reduceObj : (obj) ->
