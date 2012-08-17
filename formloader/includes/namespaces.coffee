@@ -13,3 +13,5 @@ Helpers     = {}
 # Last & Current pages to destroy on navigation
 LastPage = null
 CurrentPage = null
+
+Socket = io.connect('http://localhost:3000')

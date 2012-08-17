@@ -13,6 +13,11 @@ Routers.Main = R.extend
   validTypes : ['applications', 'fields', 'forms', 'fieldsets', 'decorators', 'validations', 'buttons', 'templates']
 
   initialize : () ->
+    _.each @validTypes, (type) ->
+      Socket.on type, (data) ->
+        if m = app.c[type].get(data.id)
+          m.set(data)
+
     @on 'all', () ->
       if LastPage?
         LastPage.destroy().remove()

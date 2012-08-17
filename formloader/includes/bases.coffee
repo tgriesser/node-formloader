@@ -6,7 +6,22 @@ N = Backbone.Navigation
 P = Backbone.Paginator
 
 # Add set & delete for the attributes object
-M = Backbone.Model
+M = Backbone.Model.extend
+  previewItem : () ->
+    item = @toJSON()
+    _.each item, (val, key) ->
+      if not val?
+        delete item[key]
+      if _.isArray(val)
+        item[key] = _.map val, (k2) ->
+          m = app.c[key].get(k2)
+          if m? and m.previewItem?
+            return m.previewItem()
+          else
+            return k2
+    , @
+    return item
+
 
 # Standard form saving function and a destroy 
 # (at least until the api is standardized) on that

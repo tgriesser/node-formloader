@@ -7,14 +7,14 @@
       </div>
       <div class="span1">
         <div class="btn-group">
-          <a href="#" class="btn btn-info">+</a>
+          <a data-createItem="<%= data.type %>" href="#" class="btn btn-info">+</a>
           <a class="btn btn-info dropdown-toggle" data-toggle="dropdown">
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <!-- dropdown menu links -->
-            <li><a href="#">Create New</a></li>
-            <li><a href="#">Create Custom</a></li>
+            <li><a data-createItem="<%= data.type %>" href="#">Create New</a></li>
+            <li><a data-createCustom="<%= data.type %>" href="#">Create Custom</a></li>
           </ul>
         </div>
       </div>

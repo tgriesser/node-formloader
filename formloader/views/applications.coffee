@@ -4,6 +4,8 @@ Pages.baseObject = V.extend
   
   # The shared events for all pages
   events : 
+    "click a[data-preview]" : "previewItem"
+    "click a[data-createItem]" : "createItem"
     "click a[data-addAttribute]" : "addAttribute"
     "click a[data-removeAttribute]" : "removeAttribute"
     "click a[data-addMeta]" : "addMeta"
@@ -19,7 +21,6 @@ Pages.baseObject = V.extend
       e.preventDefault()
       @saveForm e, null, (m) =>
         if m.id?
-          # bootstrapApp(app.m.application.id)
           Backbone.history.navigate("/#{app.m.application.id}/#{@type}/#{m.id}", {trigger:true})
 
   # Opens an item for editing
@@ -52,6 +53,14 @@ Pages.baseObject = V.extend
     aSess.on 'change', () =>
       @model.set({'value' : @editor.getSession().getValue()}, {silent:true})
 
+  createItem : (e) ->
+    e.preventDefault()
+    item = $(e.currentTarget).attr('data-createItem')
+    Helpers.windowOpen
+      url : "/#{app.m.application.id}/#{item}/create"
+      windowName : item
+      windowOptions : 'location=0,status=0,width=900,height=740'
+
   # Initializes a select for one of the main items  
   # (fieldset, field, button, decorator, validation)
   initSelect : (item, model, data = []) ->
@@ -83,6 +92,7 @@ Pages.baseObject = V.extend
 
         initSelection : (element, callback) ->
           callback({id : model.get(item), text : model.get(item)})
+
       })
 
     else
@@ -188,6 +198,10 @@ Pages.baseObject = V.extend
     catch e
       @$el.html(Templates['errors/404-app'])
     this
+
+  previewItem : (e) ->
+    if e? then e.preventDefault()
+    console.log(@model.previewItem())
 
 # A list of all applications
 Pages['application/list'] = V.extend

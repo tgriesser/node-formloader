@@ -24,6 +24,7 @@ class ApiError
 
 # Namespaces & Constants
 Apps = {}
+UpdateItems = {}
 
 OutputDir = path.join(__dirname, '../', settings.outputDir);
 
@@ -74,7 +75,9 @@ saveApp = (name, callback) ->
   # Write the output
   fs.writeFile path.join(OutputDir, name.toLowerCase() + '.js'), output, 'UTF-8', (err) ->
     
-    if callback? then callback(err)
+    data = {}
+
+    if callback? then callback(err, data)
 
     # Alert that the app was saved
     console.log("App #{name} updated!")
@@ -94,11 +97,13 @@ updateItemRef = (name, type, key, value) ->
             v2[type][i] = value 
           else 
             v2[type] = _.without(v2[type], key)
+          # UpdateItems.push(k)
       else if v2[type] is key
         if value?
           v2[type] = value
         else
           delete v2[type]
+        # UpdateItems.push(k)
 
 # Initialize the Formloader Applications from the fs
 # {string} - outputDir - directory where the files are read from

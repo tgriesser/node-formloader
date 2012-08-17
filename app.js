@@ -6,12 +6,15 @@
 
 "use strict";
 
-var express = require('express')
+var io
+  , Emitter = require('events').EventEmitter
+  , express = require('express')
   , http = require('http')
   , path = require('path')
   , fs = require('fs')
   , coffee = require('coffee-script')
-  
+  , socket = require('socket.io')
+
   // Coffeepress the app, convert to javascript and optionally compress
   , _ = require('underscore')
   , BuildIt = require('buildit')
@@ -22,12 +25,14 @@ var express = require('express')
   , port = 3000
   ;
 
+var proxy = new Emitter();
+
 // Init the app, generating all coffee, js & css assets
 require('./app/initialize');
 
 // Generate the Express App
 app.configure(function(){
-  app.set('port', process.env.PORT || port);
+  app.set('port', port);
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
@@ -59,7 +64,7 @@ app.post('/api/applications', function(req, res) {
 });
 
 // Delete an application
-app['delete']('/api/applications/:name', function(req, res) {
+app.del('/api/applications/:name', function(req, res) {
   res.set('Content-Type', 'text/javascript');
   api.deleteApp(req.params.name, function(err, msg) {
     res.send(200, {});
@@ -89,15 +94,15 @@ app.all('/api/:app/:base?/:item?', function(req, res) {
       id = _.clone(req.body.key);
       api.updateItem(req.params.app, req.params.base, req.params.item, req.body, function(err, emit){
         if (err) res.send(400, [err.message]);
+        if (!_.isEmpty(emit)) {
+          emit = JSON.parse(emit);
+          for (var attr in emit) {
+            proxy.emit('socket', attr, emit[attr]);
+          }
+        }
         res.json({
           id : id
         });
-        if (emit) {
-          _.each(emit, function(v, k){
-            console.log(k);
-            // socket.emit(k, v);
-          });
-        }
       });
     break;
     case 'delete':
@@ -131,3 +136,14 @@ app.all('/:app?/:type?/:item?', function(req, res){
 var server = http.createServer(app).listen(app.get('port'), function() {
   console.log("Express server listening on port " + app.get('port'));
 });
+
+// Initialize the socket.io
+io = socket.listen(server);
+
+// Emit on event changes
+io.sockets.on('connection', function (socket) {
+  proxy.on('socket', function(item, payload) {
+    // socket.emit(item, payload);
+  });
+});
+
