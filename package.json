@@ -11,6 +11,8 @@
     "uglify-js" : "*",
     "buildit" : "*",
     "checkit" : "*",
-    "socket.io" : "*"
+    "socket.io" : "*",
+    "objectdump" : "*",
+    "underscore" : ">=1.3.3"
   }
 }

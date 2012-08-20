@@ -51,7 +51,7 @@ exports.sample = {
   },
   "decorators": {
     "bootstrap2-form": function (){
-  var $form = $("<div class='control-group'>\n<label class='control-label'>Key:</label>\n<div class='controls'></div>\n</div>");
+  var $form = $("<div class='control-group'><label class='control-label'>Key:</label><div class='controls'></div></div>");
   $form.find('.controls').append(this.$el);
   this.$el = $form;
 },
@@ -66,5 +66,7 @@ exports.sample = {
   tim = 'two';
 }
   },
-  "templates" : {}
+  "templates": {
+  
+  }
 };
